@@ -1,4 +1,4 @@
-package br.com.p3.GoJym.models;
+package br.com.p3.GoJym.model;
 
 import jakarta.persistence.*;
 import lombok.*;

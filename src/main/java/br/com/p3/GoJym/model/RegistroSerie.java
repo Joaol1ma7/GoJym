@@ -1,4 +1,4 @@
-package br.com.p3.GoJym.models;
+package br.com.p3.GoJym.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,11 +6,11 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sessao_exercicio")
+@Table(name = "registro_serie")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SessaoExercicio {
+public class RegistroSerie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,22 +18,19 @@ public class SessaoExercicio {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sessao_treino_id", nullable = false)
-    private SessaoTreino sessaoTreino;
+    @JoinColumn(name = "registro_treino_id", nullable = false)
+    private RegistroTreino registroTreino;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exercicio_id", nullable = false)
     private Exercicio exercicio;
 
-    @Column(name = "num_series", nullable = false)
-    private Integer numSeries;
-
-    @Column(name = "repeticoes_min", nullable = false)
-    private Integer repeticoesMin;
-
-    @Column(name = "repeticoes_max", nullable = false)
-    private Integer repeticoesMax;
+    @Column(name = "numero_serie", nullable = false)
+    private Integer numeroSerie;
 
     @Column(nullable = false)
-    private Integer ordem;
+    private Float carga;
+
+    @Column(nullable = false)
+    private Integer repeticoes;
 }
