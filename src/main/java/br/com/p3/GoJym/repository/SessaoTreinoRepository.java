@@ -1,5 +1,7 @@
 package br.com.p3.GoJym.repository;
 
+import br.com.p3.GoJym.controller.SessaoTreinoController;
+import br.com.p3.GoJym.dto.CreateSessaoTreinoDTO;
 import br.com.p3.GoJym.dto.SessaoTreinoDTO;
 import br.com.p3.GoJym.model.SessaoTreino;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +19,6 @@ public interface SessaoTreinoRepository extends JpaRepository<SessaoTreino, UUID
            "WHERE st.usuario.id = :usuarioId " +
            "GROUP BY st.id, st.nome, st.createdAt")
     List<SessaoTreinoDTO> findAllByUsuarioId(@Param("usuarioId") UUID usuarioId);
+
+    SessaoTreino save(SessaoTreino sessaoTreino);
 }
