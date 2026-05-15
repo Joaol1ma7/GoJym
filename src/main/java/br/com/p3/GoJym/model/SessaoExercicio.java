@@ -36,4 +36,7 @@ public class SessaoExercicio {
 
     @Column(nullable = false)
     private Integer ordem;
+
+    @Column(name = "descanso")
+    private Integer descanso;
 }

@@ -1,7 +1,5 @@
 package br.com.p3.GoJym.repository;
 
-import br.com.p3.GoJym.controller.SessaoTreinoController;
-import br.com.p3.GoJym.dto.CreateSessaoTreinoDTO;
 import br.com.p3.GoJym.dto.SessaoTreinoDTO;
 import br.com.p3.GoJym.model.SessaoTreino;
 import org.springframework.data.jpa.repository.JpaRepository;

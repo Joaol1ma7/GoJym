@@ -11,8 +11,9 @@ import lombok.*;
 public class Exercicio {
 
     @Id
-    @Column(nullable = false, updatable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column( updatable = false)
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
