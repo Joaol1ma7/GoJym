@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SessaoTreinoRepository extends JpaRepository<SessaoTreino, UUID> {
@@ -19,4 +20,6 @@ public interface SessaoTreinoRepository extends JpaRepository<SessaoTreino, UUID
     List<SessaoTreinoDTO> findAllByUsuarioId(@Param("usuarioId") UUID usuarioId);
 
     SessaoTreino save(SessaoTreino sessaoTreino);
+
+    Optional<SessaoTreino> findByNome(String nome);
 }
