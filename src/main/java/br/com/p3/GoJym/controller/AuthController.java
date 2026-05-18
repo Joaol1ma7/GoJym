@@ -42,7 +42,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO data){
         if(usuarioRepository.findByEmail(data.getEmail())!=null){
-            return ResponseEntity.badRequest().body("Email já cadastrado");
+            return ResponseEntity.badRequest().body("Email ja cadastrado");
         }
 
         String encryptedPassword= new BCryptPasswordEncoder().encode(data.getSenhaHash());

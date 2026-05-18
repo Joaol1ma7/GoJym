@@ -25,7 +25,7 @@ COPY src ./src
 COPY pom.xml ./
 RUN ./mvnw -B -DskipTests package
 
-### Runtime image usando JRE (ainda menor e mais segura para produção)
+### Runtime image usando JRE (ainda menor e mais segura para producão)
 FROM eclipse-temurin:25-jdk AS runtime
 
 WORKDIR /app

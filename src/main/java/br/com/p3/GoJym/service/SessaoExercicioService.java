@@ -53,7 +53,6 @@ public class SessaoExercicioService {
     public List<SessaoExercicioResponseDTO> editSessaoExercicios(List<EditSessaoExercicioRequestDTO> requestDTO, SessaoTreino sessaoTreino) {
         List<SessaoExercicioResponseDTO> exercicioResponseDTOS = new ArrayList<>();
 
-        // será coletado o conjunto de ids que ficaram (os enviados que já existiam + os novos salvos)
         Set<UUID> idsSalvos = new HashSet<>();
 
         for (EditSessaoExercicioRequestDTO exercicio : requestDTO) {
