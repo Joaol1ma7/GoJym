@@ -1,9 +1,8 @@
 package br.com.p3.GoJym.controller;
 
-import br.com.p3.GoJym.dto.CreateSessaoTreinoRequestDTO;
-import br.com.p3.GoJym.dto.CreateSessaoTreinoResponseDTO;
-import br.com.p3.GoJym.dto.SessaoTreinoDTO;
+import br.com.p3.GoJym.dto.*;
 import br.com.p3.GoJym.exceptions.SessaoTreinoJaExisteException;
+import br.com.p3.GoJym.exceptions.SessaoTreinoNaoExisteException;
 import br.com.p3.GoJym.model.Usuario;
 import br.com.p3.GoJym.service.SessaoTreinoService;
 import org.springframework.http.HttpStatus;
@@ -52,4 +51,25 @@ public class SessaoTreinoController {
         }
     }
 
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<EditSessaoTreinoResponseDTO> editSessaoTreino(@PathVariable UUID id, @RequestBody EditSessaoTreinoRequestDTO requestDTO){
+        try{
+            EditSessaoTreinoResponseDTO responseDTO= sessaoTreinoService.editSessaoTreino(id, requestDTO);
+            return ResponseEntity.ok(responseDTO);
+        }catch(SessaoTreinoNaoExisteException e){
+            return ResponseEntity.notFound().build();
+        }catch(SessaoTreinoJaExisteException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SessaoTreinoEspDTO> getSessaoTreinoById(@PathVariable UUID id){
+        try{
+            SessaoTreinoEspDTO respDTO= sessaoTreinoService.getSessaoTreinoById(id);
+            return ResponseEntity.ok(respDTO);
+        }catch(SessaoTreinoNaoExisteException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

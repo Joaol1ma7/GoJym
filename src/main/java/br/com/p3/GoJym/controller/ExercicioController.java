@@ -4,7 +4,7 @@ package br.com.p3.GoJym.controller;
 import br.com.p3.GoJym.dto.ExercicioDTO;
 import br.com.p3.GoJym.dto.ExercicioRequestDTO;
 import br.com.p3.GoJym.exceptions.ExercicioJaExisteException;
-import br.com.p3.GoJym.exceptions.ExercicioNotFoundException;
+import br.com.p3.GoJym.exceptions.ExercicioNaoEncontradoException;
 import br.com.p3.GoJym.service.ExercicioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,7 @@ public class ExercicioController {
         try{
             exercicioService.deleteExercicio(id);
             return ResponseEntity.noContent().build();
-        }catch(ExercicioNotFoundException e){
+        }catch(ExercicioNaoEncontradoException e){
             return ResponseEntity.notFound().build();
         }
     }
@@ -54,7 +54,7 @@ public class ExercicioController {
         try{
             ExercicioDTO exercicioDTO = exercicioService.updateExercicio(exercicioRequestDTO.getNome(), id);
             return ResponseEntity.ok(exercicioDTO);
-        }catch(ExercicioNotFoundException e){
+        }catch(ExercicioNaoEncontradoException e){
             return ResponseEntity.notFound().build();
         }catch(ExercicioJaExisteException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

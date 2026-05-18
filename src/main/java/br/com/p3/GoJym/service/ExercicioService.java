@@ -2,7 +2,7 @@ package br.com.p3.GoJym.service;
 
 import br.com.p3.GoJym.dto.ExercicioDTO;
 import br.com.p3.GoJym.exceptions.ExercicioJaExisteException;
-import br.com.p3.GoJym.exceptions.ExercicioNotFoundException;
+import br.com.p3.GoJym.exceptions.ExercicioNaoEncontradoException;
 import br.com.p3.GoJym.model.Exercicio;
 import br.com.p3.GoJym.repository.ExercicioRepository;
 import org.springframework.stereotype.Service;
@@ -45,13 +45,13 @@ public class ExercicioService {
         if (exercicio != null) {
             exercicioRepository.deleteById(id);
         }else{
-            throw new ExercicioNotFoundException();
+            throw new ExercicioNaoEncontradoException();
         }
     }
     public ExercicioDTO updateExercicio(String nome, Long id){
         Exercicio exercicio = exercicioRepository.findById(id).orElse(null);
         if(exercicio==null){
-            throw new ExercicioNotFoundException();
+            throw new ExercicioNaoEncontradoException();
         }else{
             Exercicio exercicioProcurado = exercicioRepository.findByNome(nome).orElse(null);
             if(exercicioProcurado!=null){

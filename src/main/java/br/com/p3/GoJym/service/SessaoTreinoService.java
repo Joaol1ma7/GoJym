@@ -1,21 +1,15 @@
 package br.com.p3.GoJym.service;
 
-import br.com.p3.GoJym.dto.CreateSessaoTreinoRequestDTO;
-import br.com.p3.GoJym.dto.CreateSessaoTreinoResponseDTO;
-import br.com.p3.GoJym.dto.SessaoExercicioResponseDTO;
-import br.com.p3.GoJym.dto.SessaoTreinoDTO;
+import br.com.p3.GoJym.dto.*;
 import br.com.p3.GoJym.exceptions.SessaoTreinoJaExisteException;
 import br.com.p3.GoJym.exceptions.SessaoTreinoNaoExisteException;
 import br.com.p3.GoJym.exceptions.UsuarioNaoEncontradoException;
 import br.com.p3.GoJym.model.SessaoTreino;
 import br.com.p3.GoJym.model.Usuario;
-import br.com.p3.GoJym.repository.ExercicioRepository;
-import br.com.p3.GoJym.repository.SessaoExercicioRepository;
 import br.com.p3.GoJym.repository.SessaoTreinoRepository;
 import br.com.p3.GoJym.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +41,7 @@ public class SessaoTreinoService {
             throw new UsuarioNaoEncontradoException();
         }
         SessaoTreino sessaoTreino = sessaoTreinoRepository.findByNome(requestDTO.getNome()).orElse(null);
-        List<SessaoExercicioResponseDTO> exerciciosResponseDTO= new ArrayList<>();;
+        List<SessaoExercicioResponseDTO> exerciciosResponseDTO;
         if(sessaoTreino==null){
             sessaoTreino = new SessaoTreino();
             sessaoTreino.setNome(requestDTO.getNome());
@@ -61,14 +55,34 @@ public class SessaoTreinoService {
 
         return new CreateSessaoTreinoResponseDTO(sessaoTreino.getId(), sessaoTreino.getNome(), exerciciosResponseDTO, sessaoTreino.getCreatedAt());
     }
+
     public void deleteSessaoTreino(UUID id){
         SessaoTreino sessaoTreino=sessaoTreinoRepository.findById(id).orElse(null);
         if(sessaoTreino==null){
             throw new SessaoTreinoNaoExisteException();
         }
         sessaoTreinoRepository.delete(sessaoTreino);
-        return;
     }
+
+    public EditSessaoTreinoResponseDTO editSessaoTreino(UUID id, EditSessaoTreinoRequestDTO editSessaoTreinoDTO){
+        SessaoTreino sessaoTreino=sessaoTreinoRepository.findById(id).orElse(null);
+        if(sessaoTreino==null){
+            throw new SessaoTreinoNaoExisteException();
+        }
+        sessaoTreino.setNome(editSessaoTreinoDTO.getNome());
+        SessaoTreino sessaoTreinoEditada = sessaoTreinoRepository.save(sessaoTreino);
+
+        List<SessaoExercicioResponseDTO> exercicios = sessaoExercicioService.editSessaoExercicios(editSessaoTreinoDTO.getExercicios(), sessaoTreino);
+        return new EditSessaoTreinoResponseDTO(sessaoTreinoEditada.getId(),sessaoTreinoEditada.getNome(), exercicios);
+    }
+
+    public SessaoTreinoEspDTO getSessaoTreinoById(UUID id){
+        SessaoTreino sessaoTreino=sessaoTreinoRepository.findById(id).orElseThrow(SessaoTreinoNaoExisteException::new);
+        List<SessaoExercicioResponseDTO> exercicios = sessaoExercicioService.getSessaoExerciciosBySessaoTreinoId(id);
+        return new SessaoTreinoEspDTO(sessaoTreino.getId(), sessaoTreino.getNome(), sessaoTreino.getCreatedAt(), exercicios);
+    }
+
+
 }
 
 
